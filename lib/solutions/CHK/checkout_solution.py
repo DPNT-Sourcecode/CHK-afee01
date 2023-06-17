@@ -59,20 +59,20 @@ def calculate_multi_price(total: int, item: str, count: int):
 
 
 def calculate_bogof_price(item_count: dict, total: int, item: str, count: int):
-    num, free_item = item_bogof_map[item].items()
+    num, free_item = item_bogof_map[item]
     div, remainder = divmod(count, num)
     if free_item in item_count.keys():
         item_count[free_item] -= div
-        if item_count["B"] < 0:
-            item_count["B"] = 0
-    total += item_count["E"] * 40
+        if item_count[free_item] < 0:
+            item_count[free_item] = 0
+    total += item_count[item] * item_price_map[item]
 
 
 def calculate_price(item_count: dict) -> int:
     total = 0
     for item, count in item_count.items():
         if item in item_bogof_map.keys():
-            total = calculate_bogof_price(total, item, count)
+            total = calculate_bogof_price(item_count, total, item, count)
         elif item in item_multi_price_map.keys():
             total = calculate_multi_price(total, item, count)
         else:
@@ -164,4 +164,5 @@ def checkout(skus):
 #         else:
 #             item_count[item] = 1
 #     return calculate_price(item_count)
+
 
