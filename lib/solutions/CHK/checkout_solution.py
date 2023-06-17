@@ -32,7 +32,7 @@ item_price_map = {
 
 item_bogof_map = {
     "E": {2: "B"},
-    "F": {2: "F"},
+    "F": {3: "F"},
     "N": {3: "M"},
     "R": {3: "Q"},
     "U": {3: "U"},
@@ -58,20 +58,23 @@ def calculate_multi_price(total: int, item: str, count: int):
     return total
 
 
-# def calculate_bogof_price(total: int, item: str, count: int):
-#     item_bogof_map[item]
-#     total += item_count["F"] * 10
-#     div, _ = divmod(item_count["F"], 3)
-#     total -= div * 10
+def calculate_bogof_price(item_count: dict, total: int, item: str, count: int):
+    num, free_item = item_bogof_map[item].items()
+    div, remainder = divmod(count, num)
+    if free_item in item_count.keys():
+        item_count[free_item] -= div
+        if item_count["B"] < 0:
+            item_count["B"] = 0
+    total += item_count["E"] * 40
 
 
 def calculate_price(item_count: dict) -> int:
     total = 0
     for item, count in item_count.items():
-        if item in item_multi_price_map.keys():
-            total = calculate_multi_price(total, item, count)
-        elif item in item_bogof_map.keys():
+        if item in item_bogof_map.keys():
             total = calculate_bogof_price(total, item, count)
+        elif item in item_multi_price_map.keys():
+            total = calculate_multi_price(total, item, count)
         else:
             total = count * item_price_map[item]
 
@@ -161,3 +164,4 @@ def checkout(skus):
 #         else:
 #             item_count[item] = 1
 #     return calculate_price(item_count)
+
