@@ -51,7 +51,7 @@ item_multi_price_map = {
 item_buy_any_three = {"S", "T", "X", "Y", "Z"}
 
 
-def calculate_buy_any_three(skus, total: int):
+def calculate_buy_any_three(skus: str, total: int):
     item_price_order = [
         item
         for item, _ in sorted(item_price_map.items(), key=lambda x: x[1])
@@ -61,16 +61,11 @@ def calculate_buy_any_three(skus, total: int):
     d = {v: i for i, v in enumerate(item_price_order)}
     r = sorted(skus_filter, key=lambda v: d[v])
     div, count = divmod(len(r), 3)
-    # count = 0
-    # for item in item_price_order:
-    #     count += item_count[item]
-    #     div, count = divmod(count, 3)
-    #     if div != 0:
-    #         total += div * 45
-    #         count = 0
-    #         item_count.pop(item)
-        
-    total += count *
+    total += div * 45
+    # Left over items
+    for item in r[:-count]:
+        total += count * item_price_map[item]
+    return total
 
 
 def calculate_multi_price(total: int, item: str, count: int):
@@ -80,7 +75,6 @@ def calculate_multi_price(total: int, item: str, count: int):
         div, count = divmod(count, key)
         total += div * item_multi_price_map[item][key]
     total += count * item_price_map[item]
-    print(item, total)
     return total
 
 
@@ -99,11 +93,11 @@ def calculate_bogof_price(item_count: dict, total: int, item: str, count: int):
     return total
 
 
-def calculate_price(item_count: dict) -> int:
+def calculate_price(skus: str, item_count: dict) -> int:
     """Calculate total price by applying BOGOF offers first, multiprice offers,
     and then any remaining items."""
     total = 0
-    calculate_buy_any_three()
+    total = calculate_buy_any_three(skus, total)
     for item in item_bogof_map.keys():
         if item in item_count.keys():
             total = calculate_bogof_price(item_count, total, item, item_count[item])
@@ -127,7 +121,8 @@ def checkout(skus):
             item_count[item] += 1
         else:
             item_count[item] = 1
-    return calculate_price(item_count)
+    return calculate_price(skus, item_count)
+
 
 
 
