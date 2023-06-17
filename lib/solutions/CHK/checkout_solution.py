@@ -48,13 +48,27 @@ item_multi_price_map = {
     "V": {2: 90, 3: 130},
 }
 
-def calculate_multi_price(total: int, count: int):
+
+def calculate_multi_price(total: int, item: str, count: int):
+    if len(item_multi_price_map[item]) == 2:
+        div, remainder = divmod(count, 5)
+        total += div * 200
+        div, remainder = divmod(remainder, 3)
+        total += div * 130
+        total += remainder * 50
+    elif len(item_multi_price_map[item]) == 1:
+        div, remainder = divmod(item, 2)
+        total += div * 45
+        total += remainder * 30
+    else:
+        raise ValueError("Too many multiprice offers. Implement.")
+
 
 def calculate_price(item_count: dict) -> int:
     total = 0
     for item, count in item_count.items():
         if item in item_multi_price_map.keys():
-            calculate_multi_price(total, count)
+            calculate_multi_price(total, item, count)
 
     total = calculate_A(total, item_count)
     total = calculate_E(total, item_count)
@@ -63,6 +77,7 @@ def calculate_price(item_count: dict) -> int:
     total = calculate_D(total, item_count)
     total = calculate_F(total, item_count)
     return total
+
 
 def checkout(skus):
     item_count = {}
@@ -147,3 +162,4 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+
