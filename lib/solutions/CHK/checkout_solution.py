@@ -49,6 +49,12 @@ item_multi_price_map = {
 }
 
 
+def calculate_buy_any_three(item_count: dict, total: int):
+    item_price_order = [
+        item for item, _ in sorted(item_count.items(), key=lambda x: x[1])
+    ]
+
+
 def calculate_multi_price(total: int, item: str, count: int):
     """Using the multiprice offer, add to the total value."""
     keys_sorted = sorted(item_multi_price_map[item].keys(), reverse=True)
@@ -103,3 +109,4 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+
