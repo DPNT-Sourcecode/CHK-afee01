@@ -57,8 +57,13 @@ def calculate_buy_any_three(item_count: dict, total: int):
         for item, _ in sorted(item_count.items(), key=lambda x: x[1])
         if item in item_buy_any_there
     ]
+    count = 0
     for item in item_price_order:
-        item_count
+        count += item_count[item]
+        div, count = divmod(count, 3)
+        if div != 0:
+            count = 0
+        total += div * 45
 
 
 def calculate_multi_price(total: int, item: str, count: int):
@@ -115,5 +120,6 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+
 
 
