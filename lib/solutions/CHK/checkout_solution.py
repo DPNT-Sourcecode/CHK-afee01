@@ -48,7 +48,35 @@ item_multi_price_map = {
     "V": {2: 90, 3: 130},
 }
 
+def calculate_multi_price(total: int, count: int):
 
+def calculate_price(item_count: dict) -> int:
+    total = 0
+    for item, count in item_count.items():
+        if item in item_multi_price_map.keys():
+            calculate_multi_price(total, count)
+
+    total = calculate_A(total, item_count)
+    total = calculate_E(total, item_count)
+    total = calculate_B(total, item_count)
+    total = calculate_C(total, item_count)
+    total = calculate_D(total, item_count)
+    total = calculate_F(total, item_count)
+    return total
+
+def checkout(skus):
+    item_count = {}
+    for item in skus:
+        if item not in item_price_map.keys():
+            return -1
+        if item in item_count.keys():
+            item_count[item] += 1
+        else:
+            item_count[item] = 1
+    return calculate_price(item_count)
+
+
+#####
 def calculate_A(total: int, item_count: dict):
     if "A" in item_count.keys():
         div, remainder = divmod(item_count["A"], 5)
@@ -119,5 +147,3 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
-
-
