@@ -1,25 +1,48 @@
 # noinspection PyUnusedLocal
 # skus = unicode string
-def calculate_price(item_count: dict) -> int:
-    total = 0
+
+
+def calculate_A(total: int, item_count: dict):
     if "A" in item_count.keys():
         div, remainder = divmod(item_count["A"], 3)
         total += div * 130
         total += remainder * 50
-    if "E" in item_count.keys():
-        div, remainder = divmod(item_count["E"], 2)
-        item_count["B"] -= div
-        if item_count["B"] < 0:
-            item_count["B"] = 0
-        total += item_count["E"] * 40
+    return total
+
+
+def calculate_B(total: int, item_count: dict):
     if "B" in item_count.keys():
         div, remainder = divmod(item_count["B"], 2)
         total += div * 45
         total += remainder * 30
+    return total
+
+
+def calculate_C(total: int, item_count: dict):
     if "C" in item_count.keys():
         total += item_count["C"] * 20
+    return total
+
+
+def calculate_D(total: int, item_count: dict):
     if "D" in item_count.keys():
         total += item_count["D"] * 15
+    return total
+
+
+def calculate_E(total: int, item_count: dict):
+    if "E" in item_count.keys():
+        div, remainder = divmod(item_count["E"], 2)
+        if "B" in item_count.keys():
+            item_count["B"] -= div
+            if item_count["B"] < 0:
+                item_count["B"] = 0
+            total += item_count["E"] * 40
+    return total
+
+
+def calculate_price(item_count: dict) -> int:
+    total = 0
 
     return total
 
@@ -34,3 +57,4 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+

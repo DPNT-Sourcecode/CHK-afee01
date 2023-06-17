@@ -13,3 +13,7 @@ class TestCheckout:
 
     def test_checkout_4E_and_3B(self):
         assert checkout_solution.checkout("EEEEBBB") == 190
+
+    def test_checkout_E(self):
+        assert checkout_solution.checkout("E") == 40
+
