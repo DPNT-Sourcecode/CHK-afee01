@@ -53,4 +53,6 @@ class TestCheckout:
 
     def test_checkout_r5(self):
         assert checkout_solution.checkout("STX") == 45
+        assert checkout_solution.checkout("SSTX") == 62
+
 

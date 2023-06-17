@@ -54,16 +54,17 @@ item_buy_any_three = {"S", "T", "X", "Y", "Z"}
 def calculate_buy_any_three(skus: str, total: int):
     item_price_order = [
         item
-        for item, _ in sorted(item_price_map.items(), key=lambda x: x[1])
+        for item, _ in sorted(item_price_map.items(), key=lambda x: x[1], reverse=True)
         if item in item_buy_any_three
     ]
     skus_filter = [item for item in skus if item in item_buy_any_three]
     d = {v: i for i, v in enumerate(item_price_order)}
     r = sorted(skus_filter, key=lambda v: d[v])
+    print(r)
     div, count = divmod(len(r), 3)
     total += div * 45
     # Left over items
-    for item in r[:-count]:
+    for item in r[-count:]:
         total += count * item_price_map[item]
     return total
 
@@ -97,6 +98,9 @@ def calculate_price(skus: str, item_count: dict) -> int:
     """Calculate total price by applying BOGOF offers first, multiprice offers,
     and then any remaining items."""
     total = 0
+    for item in item_buy_any_three:
+        if item in item_count.keys():
+            item_count.pop(item)
     total = calculate_buy_any_three(skus, total)
     for item in item_bogof_map.keys():
         if item in item_count.keys():
@@ -122,6 +126,7 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(skus, item_count)
+
 
 
 
