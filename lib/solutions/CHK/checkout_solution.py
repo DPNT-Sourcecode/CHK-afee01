@@ -62,8 +62,11 @@ def calculate_buy_any_three(item_count: dict, total: int):
         count += item_count[item]
         div, count = divmod(count, 3)
         if div != 0:
+            total += div * 45
             count = 0
-        total += div * 45
+            item_count.pop(item)
+        
+    total += count *
 
 
 def calculate_multi_price(total: int, item: str, count: int):
@@ -96,6 +99,7 @@ def calculate_price(item_count: dict) -> int:
     """Calculate total price by applying BOGOF offers first, multiprice offers,
     and then any remaining items."""
     total = 0
+    calculate_buy_any_three()
     for item in item_bogof_map.keys():
         if item in item_count.keys():
             total = calculate_bogof_price(item_count, total, item, item_count[item])
@@ -120,6 +124,7 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+
 
 
 
