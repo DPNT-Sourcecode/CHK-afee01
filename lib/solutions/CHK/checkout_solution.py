@@ -50,14 +50,17 @@ item_multi_price_map = {
 
 
 def calculate_multi_price(total: int, item: str, count: int):
+    keys_sorted = sorted(item_multi_price_map[item].keys(), reverse=True)
+    for key in keys_sorted:
+        div, count = divmod(count, key)
+        total += div * item_multi_price_map[item][key]
+    total += count * item_price_map[item]
+    return total
+
+
+def calculate_multi_price(total: int, item: str, count: int):
     if len(item_multi_price_map[item]) == 2:
-        max_key = max(item_multi_price_map[item].keys())
-        div, remainder = divmod(count, max_key)
-        total += div * item_multi_price_map[item][max_key]
-        min_key = min(item_multi_price_map[item].keys())
-        div, remainder = divmod(remainder, min_key)
-        total += div * item_multi_price_map[item][min_key]
-        total += remainder * item_price_map[item]
+        calculate_multi_price_more_than_one_offer(total, item, count)
     elif len(item_multi_price_map[item]) == 1:
         div, remainder = divmod(item, 2)
         total += div * 45
@@ -164,5 +167,6 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+
 
 
