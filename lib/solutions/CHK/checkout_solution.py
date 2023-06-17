@@ -56,6 +56,7 @@ def calculate_multi_price(total: int, item: str, count: int):
         div, count = divmod(count, key)
         total += div * item_multi_price_map[item][key]
     total += count * item_price_map[item]
+    print(item, total)
     return total
 
 
@@ -87,7 +88,7 @@ def calculate_price(item_count: dict) -> int:
             total = calculate_multi_price(total, item, item_count[item])
             item_count.pop(item)
     for item in item_count.keys():
-        total = item_count[item] * item_price_map[item]
+        total += item_count[item] * item_price_map[item]
     return total
 
 
@@ -117,5 +118,6 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+
 
 
