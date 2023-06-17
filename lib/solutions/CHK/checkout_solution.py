@@ -21,4 +21,3 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
-
