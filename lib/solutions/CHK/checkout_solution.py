@@ -37,13 +37,17 @@ def calculate_E(total: int, item_count: dict):
             item_count["B"] -= div
             if item_count["B"] < 0:
                 item_count["B"] = 0
-            total += item_count["E"] * 40
+        total += item_count["E"] * 40
     return total
 
 
 def calculate_price(item_count: dict) -> int:
     total = 0
-
+    total = calculate_A(total, item_count)
+    total = calculate_E(total, item_count)
+    total = calculate_B(total, item_count)
+    total = calculate_C(total, item_count)
+    total = calculate_D(total, item_count)
     return total
 
 
@@ -57,4 +61,5 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+
 
