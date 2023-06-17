@@ -43,6 +43,15 @@ def calculate_E(total: int, item_count: dict):
     return total
 
 
+def calculate_F(total: int, item_count: dict):
+    if "F" in item_count.keys():
+        div, remainder = divmod(item_count["F"], 2)
+        item_count["F"] -= div
+        if item_count["F"] < 0:
+            item_count["F"] = 0
+        total += item_count["F"] * 10
+
+
 def calculate_price(item_count: dict) -> int:
     total = 0
     total = calculate_A(total, item_count)
@@ -56,13 +65,14 @@ def calculate_price(item_count: dict) -> int:
 def checkout(skus):
     item_count = {}
     for item in skus:
-        if item not in ["A", "B", "C", "D", "E"]:
+        if item not in ["A", "B", "C", "D", "E", "F"]:
             return -1
         if item in item_count.keys():
             item_count[item] += 1
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+
 
 
 
