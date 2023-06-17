@@ -41,6 +41,5 @@ class TestCheckout:
     def test_checkout_6F(self):
         assert checkout_solution.checkout("F" * 6) == 40
 
-
-
-
+    def test_checkout_9F(self):
+        assert checkout_solution.checkout("F" * 9) == 60
