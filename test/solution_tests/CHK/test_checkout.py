@@ -51,7 +51,3 @@ class TestCheckout:
         assert checkout_solution.checkout("ABCDEFGHIJKLMNOPQRSTUVWXYZ") == 965
         assert checkout_solution.checkout("UUU") == 120
         assert checkout_solution.checkout("NNNM") == 120
-
-
-
-
