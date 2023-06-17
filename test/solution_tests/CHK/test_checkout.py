@@ -56,5 +56,6 @@ class TestCheckout:
         assert checkout_solution.checkout("STXS") == 62
         assert checkout_solution.checkout("STAABBQQQRRXS") == 387
 
-
-
+    def test_checkout_r5_1(self):
+        assert checkout_solution.checkout("ABCDEFGHIJKLMNOPQRSTUVW") == 795
+        assert checkout_solution.checkout("CXYZYZC") == 122

@@ -60,10 +60,11 @@ def calculate_buy_any_three(skus: str, total: int):
     skus_filter = [item for item in skus if item in item_buy_any_three]
     d = {v: i for i, v in enumerate(item_price_order)}
     r = sorted(skus_filter, key=lambda v: d[v])
-    print(r)
     div, count = divmod(len(r), 3)
+    print(div)
     total += div * 45
     # Left over items
+    print(r[-count:])
     for item in r[-count:]:
         total += count * item_price_map[item]
     return total
@@ -126,10 +127,3 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(skus, item_count)
-
-
-
-
-
-
-
