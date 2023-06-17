@@ -4,7 +4,9 @@
 
 def calculate_A(total: int, item_count: dict):
     if "A" in item_count.keys():
-        div, remainder = divmod(item_count["A"], 3)
+        div, remainder = divmod(item_count["A"], 5)
+        total += div * 200
+        div, remainder = divmod(remainder, 3)
         total += div * 130
         total += remainder * 50
     return total
@@ -61,5 +63,6 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+
 
 
