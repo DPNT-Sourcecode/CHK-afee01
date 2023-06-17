@@ -10,4 +10,3 @@ def compute(x: float, y: float) -> float:
         float: Sum result
     """
     return x + y
-
