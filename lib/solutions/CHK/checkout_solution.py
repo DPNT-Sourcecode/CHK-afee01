@@ -1,6 +1,7 @@
 # noinspection PyUnusedLocal
 # skus = unicode string
 def calculate_price(item_count: dict) -> int:
+    special_offers = {"A": {3: 130, 5: 200}, "B": {2: 45}, "E": {2: -30}}
     total = 0
     if "A" in item_count.keys():
         div, remainder = divmod(item_count["A"], 3)
@@ -27,5 +28,6 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+
 
 
