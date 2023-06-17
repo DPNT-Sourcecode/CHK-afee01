@@ -45,12 +45,9 @@ def calculate_E(total: int, item_count: dict):
 
 def calculate_F(total: int, item_count: dict):
     if "F" in item_count.keys():
-        div, remainder = divmod(item_count["F"], 2)
-        if item_count["F"] >= 3:
-            item_count["F"] -= div
-            if item_count["F"] < 0:
-                item_count["F"] = 0
         total += item_count["F"] * 10
+        if item_count["F"] >= 3:
+            total -= 10
     return total
 
 
@@ -75,6 +72,7 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+
 
 
 
