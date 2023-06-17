@@ -48,23 +48,27 @@ item_multi_price_map = {
     "V": {2: 90, 3: 130},
 }
 
-item_buy_any_there = {"S", "T", "X", "Y", "Z"}
+item_buy_any_three = {"S", "T", "X", "Y", "Z"}
 
 
-def calculate_buy_any_three(item_count: dict, total: int):
+def calculate_buy_any_three(skus, total: int):
     item_price_order = [
         item
-        for item, _ in sorted(item_count.items(), key=lambda x: x[1])
-        if item in item_buy_any_there
+        for item, _ in sorted(item_price_map.items(), key=lambda x: x[1])
+        if item in item_buy_any_three
     ]
-    count = 0
-    for item in item_price_order:
-        count += item_count[item]
-        div, count = divmod(count, 3)
-        if div != 0:
-            total += div * 45
-            count = 0
-            item_count.pop(item)
+    skus_filter = [item for item in skus if item in item_buy_any_three]
+    d = {v: i for i, v in enumerate(item_price_order)}
+    r = sorted(skus_filter, key=lambda v: d[v])
+    div, count = divmod(len(r), 3)
+    # count = 0
+    # for item in item_price_order:
+    #     count += item_count[item]
+    #     div, count = divmod(count, 3)
+    #     if div != 0:
+    #         total += div * 45
+    #         count = 0
+    #         item_count.pop(item)
         
     total += count *
 
@@ -124,6 +128,7 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+
 
 
 
