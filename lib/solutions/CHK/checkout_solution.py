@@ -20,9 +20,12 @@ def calculate_price(item_count: dict) -> int:
 def checkout(skus):
     item_count = {}
     for item in skus:
+        if item not in ["A", "B", "C", "D"]:
+            return -1
         if item in item_count.keys():
             item_count[item] += 1
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+
 
