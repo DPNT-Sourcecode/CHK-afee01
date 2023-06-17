@@ -42,7 +42,7 @@ item_multi_price_map = {
     "A": {3: 130, 5: 200},
     "B": {2: 45},
     "H": {5: 45, 10: 80},
-    "K": {2: 150},
+    "K": {2: 120},
     "P": {5: 200},
     "Q": {3: 80},
     "V": {2: 90, 3: 130},
@@ -103,6 +103,7 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+
 
 
 
