@@ -78,18 +78,16 @@ def calculate_price(item_count: dict) -> int:
     """Calculate total price by applying BOGOF offers first, multiprice offers,
     and then any remaining items."""
     total = 0
-    items_check = set()
     for item in item_bogof_map.keys():
         if item in item_count.keys():
             total = calculate_bogof_price(item_count, total, item, item_count[item])
-            items_check.add(item)
+            item_count.pop(item)
     for item in item_multi_price_map.keys():
         if item in item_count.keys():
             total = calculate_multi_price(total, item, item_count[item])
-            items_check.add(item)
-    for item in item_count.keys() if item not in items_check:
+            item_count.pop(item)
+    for item in item_count.keys():
         total = item_count[item] * item_price_map[item]
-
     return total
 
 
@@ -119,4 +117,5 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+
 
