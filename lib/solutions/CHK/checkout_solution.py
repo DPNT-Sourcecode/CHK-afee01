@@ -30,6 +30,24 @@ item_price_map = {
     "Z": 50,
 }
 
+item_bogof_map = {
+    "E": {2: "B"},
+    "F": {2: "F"},
+    "N": {3: "M"},
+    "R": {3: "Q"},
+    "U": {3: "U"},
+}
+
+item_multi_price_map = {
+    "A": {3: 130, 5: 200},
+    "B": {2: 45},
+    "H": {5: 45, 10: 80},
+    "K": {2: 150},
+    "P": {5: 200},
+    "Q": {3: 80},
+    "V": {2: 90, 3: 130},
+}
+
 
 def calculate_A(total: int, item_count: dict):
     if "A" in item_count.keys():
@@ -101,4 +119,5 @@ def checkout(skus):
         else:
             item_count[item] = 1
     return calculate_price(item_count)
+
 
